@@ -1,8 +1,11 @@
-
+var numberOfTulip = random(5, 10);
+var numberOfSunflower = random(5, 10);
+var numberOfRose = random(5, 10);
+var  sprinklerImage;
 void setup () {
   background(127);
   size(500,500);
-  drawScene();
+  sprinklerImage = loadImage("watercan.png");
 }
 /*******
 *House
@@ -84,13 +87,13 @@ var Flower = function(x, y, height) {
     this.height = height;
 };
 Flower.prototype.growBy = function (amount) {
-    this.height+=2*amount;
+    this.height+= amount;
 };
 Flower.prototype.isClicked = function() {
-  if(this.x-22<mouseX &&
-      mouseX<this.x+22 &&
-      this.y - this.height-44 < mouseY &&
-      mouseY < this.y) {
+  if(this.x-25<mouseX &&
+      mouseX<this.x+25 &&
+      this.y - this.height-50 < mouseY &&
+      mouseY < this.y - this.height+30) {
     return true;
   }
   return false;
@@ -164,22 +167,45 @@ Sunflower.prototype.draw = function() {
     fill(20, 20, 20);
     ellipse(this.x+5, this.y-this.height, 20, 20);
 };
+/*******
+Sprinkler
+*******/
+var Sprinkler = function() {
+};
+Sprinkler.prototype.draw() {
+  image(sprinklerImage, mouseX, mouseY, 50, 61);
+}
+
 
 /**************
 *MAIN PROGRAM
 ***************/
 
+
 /** create object instances **/
-var tulip = new Tulip(38, 390, 150);
-var sunflower = new Sunflower(186, 390, 100);
-var tulip1 = new Tulip(138, 390, 150);
-var sunflower1 = new Sunflower(286, 390, 100);
-var rose1 = new Rose(380,390,200);
+var tulipArray = new Array(); // tulip
+for (var i =0; i < numberOfTulip; i++) {
+  var tulip = new Tulip(random(0,500), random(400, 500), random(50, 250));
+  tulipArray.push(tulip);
+}
+
+var SunflowerArray = new Array(); // sunflower
+for ( var i = 0; i < numberOfSunflower; i++ ) {
+  var sunflower = new Sunflower(random(0,500), random(400,500), random(50, 250));
+  SunflowerArray.push(sunflower);
+}
+
+var RoseArray = new Array(); // rose
+for (var i = 0; i < numberOfRose; i++) {
+  var rose = new Rose(380,390,200);
+  RoseArray.push(rose);
+}
+
 var sun = new Sun(200,50,100);
 var Cloud1 = new Cloud(150,100,150,80);
 var Cloud2 = new Cloud(350,50,200,70);
 var House1 = new House(100,150,300,200);
-
+var watercan = new Sprinkler();
 
 var drawScene = function() {
     background(207, 250, 255);
@@ -187,27 +213,37 @@ var drawScene = function() {
     Cloud1.draw();
     Cloud2.draw();
     House1.draw();
-    tulip.draw();
-    sunflower.draw();
-    tulip1.draw();
-    sunflower1.draw();
-    rose1.draw();
+    for (var i = 0; i < numberOfTulip; i++) {
+      tulipArray[i].draw();
+    }
+    for (var i = 0; i < numberOfSunflower; i++) {
+      SunflowerArray[i].draw();
+    }
+    for (var i = 0; i < numberOfRose; i++) {
+      RoseArray[i].draw();
+    }
+    watercan.draw();
 };
 
 mouseClicked = function() {
-
-    if(tulip.isClicked()) {
-      tulip.growBy(10);
+    for (var i = 0; i < numberOfTulip; i++) {
+      if(tulipArray[i].isClicked()) {
+        tulipArray[i].growBy(10);
+      }
     }
-    if(tulip1.isClicked()) {
-      tulip1.growBy(10);
+    for (var i = 0; i < numberOfSunflower; i++) {
+      if(SunflowerArray[i].isClicked()) {
+        SunflowerArray[i].growBy(20);
+      }
     }
-    if(sunflower.isClicked()) {
-      sunflower.growBy(20);
-    }
-    if(sunflower1.isClicked()) {
-      sunflower1.growBy(20);
+    for (var i = 0; i < numberOfRose; i++) {
+      if (RoseArray[i].isClicked()) {
+        RoseArray[i].growBy(30);
+      }
     }
 
     drawScene();
+};
+mouseMoved = function () {
+  drawScene();
 };
