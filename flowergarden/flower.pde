@@ -98,6 +98,7 @@ Flower.prototype.isClicked = function() {
   }
   return false;
 };
+
 /*****************
 *Rose
 ******************/
@@ -107,12 +108,22 @@ var Rose = function( x, y, height) {
 };
 Rose.prototype= Object.create(Flower.prototype);
 Rose.prototype.draw = function() {
-  noStroke();
-  fill(16, 122, 12);
+  fill(16,122,12);
   rect(this.x, this.y, 10, -this.height);
-  fill(255, 0, 0);
-  // petals
-  ellipse(this.x+5, this.y-this.height, 44, 44);
+  fill(56, 169, 84);
+  ellipse(this.x+5, this.y-this.height+35, 15, 15);
+  fill(234, 67, 53);
+  var anchorY= this.y- this.height-300;
+  curve(this.x-20, anchorY ,
+        this.x-20, this.y-this.height,
+        this.x+30, this.y-this.height,
+        this.x+30, anchorY);
+
+  ellipse(this.x+5, this.y-this.height, 60, 20);
+  ellipse(this.x+5, this.y-this.height, 30, 10);
+  ellipse(this.x+5, this.y-this.height, 15, 5);
+
+  //ellipse(this.x+5, this.y-this.height, 44, 44);
 
 };
 /*****************
@@ -186,20 +197,39 @@ Sprinkler.prototype.draw = function() {
 /** create object instances **/
 var tulipArray = new Array(); // tulip
 for (var i =0; i < numberOfTulip; i++) {
-  var tulip = new Tulip(random(0,500), random(400, 500), random(50, 250));
-  tulipArray.push(tulip);
+  if(round (random(0, 1)) == 0) {
+    var tulip = new Tulip(random(0,200), random(400, 500), random(50, 250));
+    tulipArray.push(tulip);
+  } else {
+    var tulip = new Tulip(random(300,500), random(400, 500), random(50, 250));
+    tulipArray.push(tulip);
+  }
 }
 
 var SunflowerArray = new Array(); // sunflower
 for ( var i = 0; i < numberOfSunflower; i++ ) {
-  var sunflower = new Sunflower(random(0,500), random(400,500), random(50, 250));
-  SunflowerArray.push(sunflower);
+  if(round (random(0, 1)) == 0) {
+    var sunflower = new Sunflower(random(0,200), random(400,500), random(50, 250));
+    SunflowerArray.push(sunflower);
+  }
+  else {
+    var sunflower = new Sunflower(random(300,500), random(400,500), random(50, 250));
+    SunflowerArray.push(sunflower);
+  }
 }
+
 
 var RoseArray = new Array(); // rose
 for (var i = 0; i < numberOfRose; i++) {
-  var rose = new Rose(380,390,200);
-  RoseArray.push(rose);
+  if (round (random(0, 1)) == 0) {
+    var rose = new Rose(random(0,200), random(400, 500), random(50, 250));
+    RoseArray.push(rose);
+  } else {
+    var rose = new Rose(random(300, 500), random(400, 500), random(50, 250));
+    RoseArray.push(rose);
+  }
+
+
 }
 
 var sun = new Sun(200,50,100);
