@@ -172,9 +172,10 @@ Sprinkler
 *******/
 var Sprinkler = function() {
 };
-Sprinkler.prototype.draw() {
-  image(sprinklerImage, mouseX, mouseY, 50, 61);
-}
+Sprinkler.prototype.draw = function() {
+  image(sprinklerImage, mouseX, mouseY - 20, 50, 61);
+};
+
 
 
 /**************
@@ -208,6 +209,7 @@ var House1 = new House(100,150,300,200);
 var watercan = new Sprinkler();
 
 var drawScene = function() {
+
     background(207, 250, 255);
     sun.draw();
     Cloud1.draw();
