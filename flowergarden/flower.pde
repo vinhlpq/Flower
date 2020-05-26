@@ -18,11 +18,11 @@ var House = function(x, y, width, height) {
 };
 House.prototype.draw = function() {
   stroke(0);
-  fill(255);
+  fill(229,232,255);
   rect(this.x, this.y, this.width, this.height);
   var deltaX= 20;
   var deltaY= 10;
-  //Floor
+  //Roof
   fill(110,21,10);
   triangle(this.x - deltaX,
           this.y + deltaY,
@@ -41,8 +41,8 @@ House.prototype.draw = function() {
   strokeWeight(3);
   ellipse(this.x + this.width * 3 / 8+20, this.y + this.height/1.5, 15, 15);
 
-
 };
+
 /*******
 *Sun OBJECT
 *****/
@@ -89,7 +89,7 @@ var Flower = function(x, y, height) {
 Flower.prototype.growBy = function (amount) {
     this.height+= amount;
 };
-Flower.prototype.isClicked = function() {
+Flower.prototype.isWaterring = function() {
   if(this.x-25<mouseX &&
       mouseX<this.x+25 &&
       this.y - this.height-50 < mouseY &&
@@ -108,6 +108,7 @@ var Rose = function( x, y, height) {
 };
 Rose.prototype= Object.create(Flower.prototype);
 Rose.prototype.draw = function() {
+  stroke(0);
   fill(16,122,12);
   rect(this.x, this.y, 10, -this.height);
   fill(56, 169, 84);
@@ -122,9 +123,10 @@ Rose.prototype.draw = function() {
   ellipse(this.x+5, this.y-this.height, 60, 20);
   ellipse(this.x+5, this.y-this.height, 30, 10);
   ellipse(this.x+5, this.y-this.height, 15, 5);
-
-  //ellipse(this.x+5, this.y-this.height, 44, 44);
-
+  fill(158,204,102);
+  noStroke();
+  triangle(this.x, this.y, this.x+10, this.y, this.x-15, this.y - 20);
+  triangle(this.x, this.y, this.x+10, this.y, this.x+25, this.y - 20);
 };
 /*****************
 *Tulip Object Type
@@ -139,7 +141,7 @@ Tulip.prototype.draw = function() {
     noStroke();
     fill(16, 122, 12);
     rect(this.x, this.y, 10, -this.height);
-    fill(255, 0, 0);
+    fill(39, 109, 238);
     // petals
     ellipse(this.x+5, this.y-this.height, 44, 44);
     triangle(this.x-16, this.y-this.height,
@@ -151,6 +153,9 @@ Tulip.prototype.draw = function() {
     triangle(this.x+-4, this.y-this.height,
             this.x+26, this.y-this.height,
             this.x+29, this.y-this.height-36);
+    fill(158,204,102);
+    triangle(this.x, this.y, this.x+10, this.y, this.x-15, this.y - 20);
+    triangle(this.x, this.y, this.x+10, this.y, this.x+25, this.y - 20);
 };
 
 
@@ -177,6 +182,10 @@ Sunflower.prototype.draw = function() {
     ellipse(this.x+20, this.y-this.height, 20, 18);
     fill(20, 20, 20);
     ellipse(this.x+5, this.y-this.height, 20, 20);
+    noStroke();
+    fill(158,204,102);
+    triangle(this.x, this.y, this.x+10, this.y, this.x-15, this.y - 20);
+    triangle(this.x, this.y, this.x+10, this.y, this.x+25, this.y - 20);
 };
 /*******
 Sprinkler
@@ -241,6 +250,8 @@ var watercan = new Sprinkler();
 var drawScene = function() {
 
     background(207, 250, 255);
+    fill(178, 157, 38);
+    rect(0, 300, 500, 200);
     sun.draw();
     Cloud1.draw();
     Cloud2.draw();
@@ -259,17 +270,17 @@ var drawScene = function() {
 
 mouseClicked = function() {
     for (var i = 0; i < numberOfTulip; i++) {
-      if(tulipArray[i].isClicked()) {
+      if(tulipArray[i].isWaterring()) {
         tulipArray[i].growBy(10);
       }
     }
     for (var i = 0; i < numberOfSunflower; i++) {
-      if(SunflowerArray[i].isClicked()) {
+      if(SunflowerArray[i].isWaterring()) {
         SunflowerArray[i].growBy(20);
       }
     }
     for (var i = 0; i < numberOfRose; i++) {
-      if (RoseArray[i].isClicked()) {
+      if (RoseArray[i].isWaterring()) {
         RoseArray[i].growBy(30);
       }
     }
